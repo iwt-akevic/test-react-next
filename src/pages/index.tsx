@@ -1,4 +1,5 @@
-import useUsers, { User } from '@/hooks/useUsers'
+import { User } from '@/hooks/useUser'
+import useUsers from '@/hooks/useUsers'
 import { Button, List, ListItem } from '@mui/material'
 import Link from 'next/link'
 

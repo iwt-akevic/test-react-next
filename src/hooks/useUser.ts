@@ -1,5 +1,16 @@
 import { useState, useEffect } from 'react'
-import { User } from './useUsers'
+export interface User {
+  id: number
+  name: string
+  email: string
+  username: string
+  address: {
+    street: string
+    city: string
+    zipcode: string
+  }
+  phone: string
+}
 
 const useUser = (id: string): [User | null, boolean, Error | null] => {
     const [user, setUser] = useState<User | null>(null)

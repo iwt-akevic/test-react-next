@@ -2,9 +2,9 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import useUser from '@/hooks/useUser'
 import { List, ListItem } from '@mui/material'
-import { User } from '@/hooks/useUsers'
+import { User } from '@/hooks/useUser'
 
-export default function Index(usersData: User) {
+export default function Index() {
   const router = useRouter()
   const { id } = router.query
   const [user, loading, error] = useUser(id! + '')
