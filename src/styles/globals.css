@@ -19,3 +19,7 @@ a {
   display: flex;
   flex-wrap: wrap;
 }
+
+.list {
+  width: 20%;
+}

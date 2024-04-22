@@ -19,7 +19,7 @@ export default function Index(usersData: User[]) {
       <h1>User List</h1>
       <div className='wrapper'>
         {users.map((user: User) => (
-            <List key={user.id}>
+            <List className='list' key={user.id}>
                 <>
                 <ListItem>Name: {user.name}</ListItem>
                 <ListItem>Email: {user.email}</ListItem>
@@ -33,10 +33,10 @@ export default function Index(usersData: User[]) {
 }
 
 export async function getServerSideProps() {
-  const response = await fetch('https://jsonplaceholder.typicode.com/users');
-  const usersData = await response.json();
+  const response = await fetch('https://jsonplaceholder.typicode.com/users')
+  const usersData = await response.json()
 
   return {
     props: { usersData },
-  };
+  }
 }

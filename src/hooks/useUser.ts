@@ -18,25 +18,32 @@ const useUser = (id: string): [User | null, boolean, Error | null] => {
     const [error, setError] = useState<Error | null>(null)
   
     useEffect(() => {
+      let isMounted = true
+
       const fetchUser = async () => {
         try {
           const response= await fetch(`https://jsonplaceholder.typicode.com/users/${id}`)
-          const data = await response.json() 
-          setUser(data)
+          const data = await response.json()
+          if (isMounted) {
+            setUser(data)
+          }
         } catch (error) {
-          setError(error as Error)
+          if (isMounted) {
+            setError(error as Error)
+          }
         } finally {
-          setLoading(false)
+          if (isMounted) {
+            setLoading(false)
+          }
         }
       }
   
       fetchUser()
-  
-      // Cleanup function to cancel fetch if component unmounts or re-renders
+
       return () => {
-        // Cleanup logic if needed
+        isMounted = false
       }
-    }, []) // Empty dependency array ensures effect runs only once
+    }, [id]) // Dependency array includes `id` to re-run effect when `id` changes
   
     return [user, loading, error]
   }
