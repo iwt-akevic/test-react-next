@@ -7,6 +7,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
   ```shell
   yarn install
   ```
+  This project works in Node.js >=18.18.0.
 
 ## Local testing
 
