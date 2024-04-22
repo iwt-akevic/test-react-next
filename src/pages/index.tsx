@@ -3,7 +3,7 @@ import useUsers from '@/hooks/useUsers'
 import { Button, List, ListItem } from '@mui/material'
 import Link from 'next/link'
 
-export default function Index(usersData: User[]) {
+export default function Index({ usersData }: { usersData: User[] }) {
   const { users, loading, error } = useUsers(usersData)
 
   if (loading) {
@@ -14,16 +14,24 @@ export default function Index(usersData: User[]) {
     return <div>Error: {'error.message'}</div>
   }
 
+  // * is this needed?
+  if (users) {
+    usersData = users
+  }
+
+
   return (
     <div className='main'>
       <h1>User List</h1>
       <div className='wrapper'>
-        {users.map((user: User) => (
+        {usersData.map((user: User) => (
             <List className='list' key={user.id}>
                 <>
                 <ListItem>Name: {user.name}</ListItem>
                 <ListItem>Email: {user.email}</ListItem>
-                <Button variant='contained'><Link href={`/${user.id}`}>View Details</Link></Button>
+                <Button variant='contained'>
+                  <Link href={`/${user.id}`}>View Details</Link>
+                </Button>
                 </>
             </List>
           ))}
@@ -34,7 +42,7 @@ export default function Index(usersData: User[]) {
 
 export async function getServerSideProps() {
   const response = await fetch('https://jsonplaceholder.typicode.com/users')
-  const usersData = await response.json()
+  const usersData: User[] = await response.json()
 
   return {
     props: { usersData },
