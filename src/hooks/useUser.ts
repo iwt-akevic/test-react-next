@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useReducer } from 'react'
+
 export interface User {
   id: number
   name: string
@@ -12,40 +13,58 @@ export interface User {
   phone: string
 }
 
-const useUser = (id: string): [User | null, boolean, Error | null] => {
-    const [user, setUser] = useState<User | null>(null)
-    const [loading, setLoading] = useState<boolean>(true)
-    const [error, setError] = useState<Error | null>(null)
-  
-    useEffect(() => {
-      let isMounted = true
+type Action =
+  | { type: 'FETCH_START' }
+  | { type: 'FETCH_SUCCESS'; payload: User }
+  | { type: 'FETCH_ERROR'; payload: Error }
 
-      const fetchUser = async () => {
-        try {
-          const response= await fetch(`https://jsonplaceholder.typicode.com/users/${id}`)
-          const data = await response.json()
-          if (isMounted) {
-            setUser(data)
-          }
-        } catch (error) {
-          if (isMounted) {
-            setError(error as Error)
-          }
-        } finally {
-          if (isMounted) {
-            setLoading(false)
-          }
-        }
-      }
-  
-      fetchUser()
+type State = {
+  user: User | null
+  loading: boolean
+  error: Error | null
+}
 
-      return () => {
-        isMounted = false
-      }
-    }, [id]) // Dependency array includes `id` to re-run effect when `id` changes
-  
-    return [user, loading, error]
+const initialState: State = {
+  user: null,
+  loading: true,
+  error: null,
+}
+
+const reducer = (state: State, action: Action): State => {
+  switch (action.type) {
+    case 'FETCH_START':
+      return { ...state, loading: true, error: null }
+    case 'FETCH_SUCCESS':
+      return { ...state, loading: false, user: action.payload }
+    case 'FETCH_ERROR':
+      return { ...state, loading: false, error: action.payload }
+    default:
+      return state
   }
+}
+
+const useUser = (id: string): [User | null, boolean, Error | null] => {
+  const [state, dispatch] = useReducer(reducer, initialState)
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      dispatch({ type: 'FETCH_START' })
+      try {
+        const response = await fetch(`https://jsonplaceholder.typicode.com/users/${id}`)
+        const data = await response.json()
+        dispatch({ type: 'FETCH_SUCCESS', payload: data })
+      } catch (error) {
+        dispatch({ type: 'FETCH_ERROR', payload: error as Error })
+      }
+    }
+
+    fetchUser()
+
+    return () => {
+    }
+  }, [id])
+
+  return [state.user, state.loading, state.error]
+}
 
 export default useUser
