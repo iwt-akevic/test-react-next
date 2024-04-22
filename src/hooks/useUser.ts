@@ -35,7 +35,7 @@ const reducer = (state: State, action: Action): State => {
     case 'FETCH_START':
       return { ...state, loading: true, error: null }
     case 'FETCH_SUCCESS':
-      return { ...state, loading: false, user: action.payload }
+      return { ...state, loading: false, user: action.payload, error: null }
     case 'FETCH_ERROR':
       return { ...state, loading: false, error: action.payload }
     default:
