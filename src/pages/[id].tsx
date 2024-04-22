@@ -1,7 +1,7 @@
-import Head from 'next/head'
 import { useRouter } from 'next/router'
 import useUser from '@/hooks/useUser'
 import { List, ListItem } from '@mui/material'
+
 export default function Index() {
   const router = useRouter()
   const { id } = router.query

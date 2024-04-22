@@ -23,7 +23,7 @@ export default function Index(usersData: User[]) {
                 <>
                 <ListItem>Name: {user.name}</ListItem>
                 <ListItem>Email: {user.email}</ListItem>
-                <Button variant="contained"><Link href={`/${user.id}`}>View Details</Link></Button>
+                <Button variant='contained'><Link href={`/${user.id}`}>View Details</Link></Button>
                 </>
             </List>
           ))}
