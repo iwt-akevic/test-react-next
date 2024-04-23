@@ -1,7 +1,7 @@
-import useUsers from '@/hooks/useUsers'
-import { User } from '@/lib/types'
-import { Button, List, ListItem } from '@mui/material'
 import Link from 'next/link'
+import { Button, List, ListItem } from '@mui/material'
+import { User } from '@/lib/types'
+import useUsers from '@/hooks/useUsers'
 
 export default function Index({ usersData }: { usersData: User[] }) {
   const { data, loading, error } = useUsers()

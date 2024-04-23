@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
-import useUser from '@/hooks/useUser'
 import { List, ListItem } from '@mui/material'
+import useUser from '@/hooks/useUser'
 
 export default function Index() {
   const router = useRouter()
