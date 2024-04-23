@@ -1,6 +1,7 @@
-import { useRouter } from 'next/router'
+import Router, { useRouter } from 'next/router'
 import { List, ListItem } from '@mui/material'
 import useUser from '@/hooks/useUser'
+import { useEffect } from 'react'
 
 export default function Index() {
   const router = useRouter()
@@ -33,3 +34,15 @@ export default function Index() {
     </main>
   )
 }
+
+// how to access query param from server
+// export async function getServerSideProps() {
+  // const router = Router.query
+  // console.log(router)
+  // const response = await fetch('https://jsonplaceholder.typicode.com/users')
+  // const usersData: User[] = await response.json()
+
+  // return {
+  //   props: { usersData }
+  // }
+// }
