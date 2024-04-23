@@ -1,10 +1,10 @@
-import { User } from '@/hooks/useUser'
 import useUsers from '@/hooks/useUsers'
+import { User } from '@/lib/types'
 import { Button, List, ListItem } from '@mui/material'
 import Link from 'next/link'
 
 export default function Index({ usersData }: { usersData: User[] }) {
-  const { users, loading, error } = useUsers()
+  const { data, loading, error } = useUsers()
 
   if (loading) {
     return <div>Loading...</div>
@@ -14,7 +14,7 @@ export default function Index({ usersData }: { usersData: User[] }) {
     return <div>Error: {error.message}</div>
   }
 
-  const userList = users || usersData // Use usersData if users is not available
+  const userList = data || usersData // Use usersData if users is not available
 
   return (
     <div className='main'>

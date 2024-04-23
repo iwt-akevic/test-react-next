@@ -1,41 +1,11 @@
 import { useEffect, useCallback, useReducer } from 'react'
-import { User } from './useUser'
+import { UseUsersState, UseUsersReturnType, User } from '@/lib/types'
+import { reducer } from '@/lib/userReducer'
 
-type UseUsersReturnType = {
-  users: User[]
-  loading: boolean
-  error: Error | null
-  refetch: () => void
-}
-
-type State = {
-  users: User[]
-  loading: boolean
-  error: Error | null
-}
-
-type Action =
-  | { type: 'FETCH_START' }
-  | { type: 'FETCH_SUCCESS'; payload: User[] }
-  | { type: 'FETCH_ERROR'; payload: Error }
-
-const initialState: State = {
-  users: [],
+const initialState: UseUsersState = {
+  data: [],
   loading: true,
   error: null,
-}
-
-const reducer = (state: State, action: Action): State => {
-  switch (action.type) {
-    case 'FETCH_START':
-      return { ...state, loading: true, error: null }
-    case 'FETCH_SUCCESS':
-      return { ...state, loading: false, users: action.payload, error: null }
-    case 'FETCH_ERROR':
-      return { ...state, loading: false, error: action.payload }
-    default:
-      return state
-  }
 }
 
 const useUsers = (): UseUsersReturnType => {
@@ -63,7 +33,8 @@ const useUsers = (): UseUsersReturnType => {
     fetchUsers()
   }
 
-  return { users: state.users, loading: state.loading, error: state.error, refetch }
+  // also not best practice
+  return { data: state.data as User[], loading: state.loading, error: state.error, refetch }
 }
 
 export default useUsers

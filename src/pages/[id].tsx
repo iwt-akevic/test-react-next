@@ -5,7 +5,7 @@ import { List, ListItem } from '@mui/material'
 export default function Index() {
   const router = useRouter()
   const { id } = router.query
-  const [user, loading, error] = useUser(id ? String(id) : '')
+  const { data, loading, error } = useUser(id ? String(id) : '')
 
   if (loading) {
     return <div>Loading...</div>
@@ -18,15 +18,15 @@ export default function Index() {
   return (
     <main>
       <List>
-        {user && (
+        {data && (
           <>
-            <ListItem key="name">Name: {user.name}</ListItem>
-            <ListItem key="username">Username: {user.username}</ListItem>
-            <ListItem key="email">Email: {user.email}</ListItem>
-            <ListItem key="street">Street: {user.address.street}</ListItem>
-            <ListItem key="city">City: {user.address.city}</ListItem>
-            <ListItem key="zipcode">Zipcode: {user.address.zipcode}</ListItem>
-            <ListItem key="phone">Phone number: {user.phone}</ListItem>
+            <ListItem key="name">Name: {data.name}</ListItem>
+            <ListItem key="username">Username: {data.username}</ListItem>
+            <ListItem key="email">Email: {data.email}</ListItem>
+            <ListItem key="street">Street: {data.address.street}</ListItem>
+            <ListItem key="city">City: {data.address.city}</ListItem>
+            <ListItem key="zipcode">Zipcode: {data.address.zipcode}</ListItem>
+            <ListItem key="phone">Phone number: {data.phone}</ListItem>
           </>
         )}
       </List>
